@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/silverp1/arc-log/issues"
   },
-  "homepage": "https://github.com/silverp1/arc-log#readme"
+  "homepage": "https://github.com/silverp1/arc-log#readme",
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "colors": "^1.1.2",
+    "fs": "0.0.2",
+    "moment": "^2.10.3",
+    "path": "^0.11.14"
+  }
 }

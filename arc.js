@@ -1,0 +1,72 @@
+var moment = require('moment');
+var colors = require('colors');
+var path = require('path');
+var Promise = require('bluebird').Promise;
+var fs = Promise.promisifyAll(require('fs'));
+
+var timestamp_format = "M/D/YYYY HH:mm:ss:SSS";
+
+var configuration = {
+  max_log_level: 5,
+  log_to_file: true,
+  path: "/tmp/arc-log.log",
+  log_to_console: true
+};
+
+var level_colors = {
+  "ERROR": colors.red,
+  "FATAL": colors.magenta,
+  "WARN": colors.yellow,
+  "INFO": colors.cyan,
+  "DEBUG": colors.blue
+};
+
+var level_map = {
+  "ERROR": 1,
+  "FATAL": 2,
+  "WARN": 3,
+  "INFO": 4,
+  "DEBUG": 5
+};
+
+function logToFile(line) {
+    if (configuration.hasOwnProperty("path")) {
+        fs.appendFile(configuration.path, line + "\n", function(err) {
+          if (err) {
+            console.log(err);
+          }
+        });
+    }
+    else {
+        console.log("No path for log file specified in configuration...");
+    }
+}
+
+function getTimestamp() {
+  return moment().format(timestamp_format);
+}
+
+module.exports = {
+  log: function(message, level) {
+    
+    var f = level_colors[level] || function(v) { return v; }
+    var line;
+
+    if (configuration.max_log_level >= level_map[level]) {
+        line = f("[" + getTimestamp() + "] [" + level + "] " + message);
+    }
+
+    if (configuration.log_to_file && line != null) {
+        logToFile(line);
+    }
+
+    if (configuration.log_to_console && line != null) {
+        console.log(line);
+    }
+  },
+
+  set: function(key, value) {
+    configuration[key] = value;
+  }
+
+};
