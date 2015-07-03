@@ -4,13 +4,12 @@ var path = require('path');
 var Promise = require('bluebird').Promise;
 var fs = Promise.promisifyAll(require('fs'));
 
-var timestamp_format = "M/D/YYYY HH:mm:ss:SSS";
-
 var configuration = {
   max_log_level: 5,
   log_to_file: true,
   path: "/tmp/arc-log.log",
-  log_to_console: true
+  log_to_console: true,
+  timestamp_format: "M/D/YYYY HH:mm:ss:SSS"
 };
 
 var level_colors = {
