@@ -1,8 +1,8 @@
-var arc = require('./arc');
+var arc = require('../arc');
 var log = arc.log;
 
 
-log("foo", "ERROR");
+log("foo", "error");
 log("bar", "FATAL");
 log("baz", "WARN");
 

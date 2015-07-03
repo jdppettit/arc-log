@@ -1,10 +1,10 @@
 {
   "name": "arc-log",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A full featured logging solution for Node.js",
   "main": "arc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/test.js"
   },
   "repository": {
     "type": "git",

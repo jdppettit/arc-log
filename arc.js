@@ -6,8 +6,7 @@ var fs = Promise.promisifyAll(require('fs'));
 
 var configuration = {
   max_log_level: 5,
-  log_to_file: true,
-  path: "/tmp/arc-log.log",
+  log_to_file: false,
   log_to_console: true,
   timestamp_format: "M/D/YYYY HH:mm:ss:SSS"
 };
@@ -42,12 +41,14 @@ function logToFile(line) {
 }
 
 function getTimestamp() {
-  return moment().format(timestamp_format);
+  return moment().format(configuration.timestamp_format);
 }
 
 module.exports = {
   log: function(message, level) {
     
+    level = level.toUpperCase();
+
     var f = level_colors[level] || function(v) { return v; }
     var line;
 
