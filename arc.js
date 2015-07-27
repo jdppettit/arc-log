@@ -5,26 +5,30 @@ var Promise = require('bluebird').Promise;
 var fs = Promise.promisifyAll(require('fs'));
 
 var configuration = {
-  max_log_level: 5,
+  max_log_level: 4,
   log_to_file: false,
   log_to_console: true,
   timestamp_format: "M/D/YYYY HH:mm:ss:SSS"
 };
 
 var level_colors = {
+  "UNDEFINED": colors.white,
   "ERROR": colors.red,
   "FATAL": colors.magenta,
   "WARN": colors.yellow,
   "INFO": colors.cyan,
-  "DEBUG": colors.blue
+  "DEBUG": colors.blue,
+  "SUCCESS": colors.green
 };
 
 var level_map = {
+  "UNDEFINED": 0,
   "ERROR": 1,
   "FATAL": 2,
   "WARN": 3,
   "INFO": 4,
-  "DEBUG": 5
+  "DEBUG": 5,
+  "SUCCESS": 6
 };
 
 function logToFile(line) {
@@ -46,8 +50,11 @@ function getTimestamp() {
 
 module.exports = {
   log: function(message, level) {
-    
-    level = level.toUpperCase();
+    if (typeof(level) !== "undefined") {
+      level = level.toUpperCase();
+    } else {
+      level = "undefined";
+    }
 
     var f = level_colors[level] || function(v) { return v; }
     var line;
