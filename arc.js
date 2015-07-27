@@ -52,7 +52,7 @@ module.exports = {
   log: function(message, level) {
     if (typeof(level) !== "undefined") {
       level = level.toUpperCase();
-      if (level = "WARNING") {
+      if (level == "WARNING") {
         level = "WARN";
       }
     } else {
