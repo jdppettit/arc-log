@@ -6,7 +6,8 @@ var fs = Promise.promisifyAll(require('fs'));
 
 var configuration = {
   max_log_level: 4,
-  log_to_file: false,
+  log_to_file: true,
+  path: "/home/virtkick/log/agent.log",
   log_to_console: true,
   timestamp_format: "M/D/YYYY HH:mm:ss:SSS"
 };
