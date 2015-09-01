@@ -3,6 +3,7 @@ var colors = require('colors');
 var path = require('path');
 var Promise = require('bluebird').Promise;
 var fs = Promise.promisifyAll(require('fs'));
+var mkdirp = Promise.promisify(require('mkdirp'));
 
 var configuration = {
   max_log_level: 4,
@@ -33,16 +34,19 @@ var level_map = {
 };
 
 function logToFile(line) {
-    if (configuration.hasOwnProperty("path")) {
-        fs.appendFile(configuration.path, line + "\n", function(err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-    }
-    else {
-        console.log("No path for log file specified in configuration...");
-    }
+  if (configuration.hasOwnProperty("path")) {
+    mkdirp(configuration.path).then(function(err) {
+      fs.appendFile(configuration.path, line + "\n", function(err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+    }).catch(function(err) {
+
+    });
+  } else {
+    console.log("No path for log file specified in configuration...");
+  }
 }
 
 function getTimestamp() {
@@ -60,19 +64,21 @@ module.exports = {
       level = "undefined";
     }
 
-    var f = level_colors[level] || function(v) { return v; }
+    var f = level_colors[level] || function(v) {
+      return v;
+    }
     var line;
 
     if (configuration.max_log_level >= level_map[level]) {
-        line = f("[" + getTimestamp() + "] [" + level + "] " + message);
+      line = f("[" + getTimestamp() + "] [" + level + "] " + message);
     }
 
     if (configuration.log_to_file && line != null) {
-        logToFile(line);
+      logToFile(line);
     }
 
     if (configuration.log_to_console && line != null) {
-        console.log(line);
+      console.log(line);
     }
   },
 
@@ -81,3 +87,4 @@ module.exports = {
   }
 
 };
+
