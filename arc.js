@@ -8,7 +8,7 @@ var mkdirp = Promise.promisify(require('mkdirp'));
 var configuration = {
   max_log_level: 4,
   log_to_file: true,
-  path: "/home/virtkick/log/agent.log",
+  path: "/home/virtkick/log",
   log_to_console: true,
   timestamp_format: "M/D/YYYY HH:mm:ss:SSS"
 };
