@@ -35,13 +35,11 @@ var level_map = {
 
 function logToFile(line) {
   if (configuration.hasOwnProperty("path")) {
-    mkdirp(configuration.path).then(function() {
       fs.appendFile(configuration.path, line + "\n", function(err) {
         if (err) {
           console.log(err);
         }
       });
-    });
   } else {
     console.log("No path for log file specified in configuration...");
   }
