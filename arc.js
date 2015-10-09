@@ -80,7 +80,21 @@ module.exports = {
 
   set: function(key, value) {
     configuration[key] = value;
+  },
+
+  error: function(message, errorObject) {
+    if (typeof(errorObject) === "undefined") {
+      // do nothing
+    } else {
+      var f = level_colors["ERROR"] || function(v) {
+        return v;
+      }
+
+      if (configuration.max_log_level >= level_map["ERROR"]) {
+        line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
+        console.error(line, errorObject, errorObject.stack);
+      }
+    }
   }
 
 };
-
