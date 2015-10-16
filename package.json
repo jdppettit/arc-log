@@ -1,6 +1,6 @@
 {
   "name": "arc-log",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A full featured logging solution for Node.js",
   "main": "arc.js",
   "scripts": {
