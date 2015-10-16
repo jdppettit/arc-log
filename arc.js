@@ -60,7 +60,7 @@ function log(message, level) {
   var f = level_colors[level] || function(v) {
     return v;
   };
-  var line;
+  var line = null;
 
   if (configuration.max_log_level >= level_map[level]) {
     line = f("[" + getTimestamp() + "] [" + level + "] " + message);
