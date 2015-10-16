@@ -32,51 +32,71 @@ var level_map = {
 };
 
 function logToFile(line) {
-    if (configuration.hasOwnProperty("path")) {
-        fs.appendFile(configuration.path, line + "\n", function(err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-    }
-    else {
-        console.log("No path for log file specified in configuration...");
-    }
+  if (configuration.hasOwnProperty("path")) {
+    fs.appendFile(configuration.path, line + "\n", function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  } else {
+    console.log("No path for log file specified in configuration...");
+  }
 }
 
 function getTimestamp() {
   return moment().format(configuration.timestamp_format);
 }
 
-module.exports = {
-  log: function(message, level) {
-    if (typeof(level) !== "undefined") {
-      level = level.toUpperCase();
-      if (level == "WARNING") {
-        level = "WARN";
-      }
-    } else {
-      level = "undefined";
+function log(message, level) {
+  if (typeof(level) !== "undefined") {
+    level = level.toUpperCase();
+    if (level == "WARNING") {
+      level = "WARN";
     }
-
-    var f = level_colors[level] || function(v) { return v; }
-    var line;
-
-    if (configuration.max_log_level >= level_map[level]) {
-        line = f("[" + getTimestamp() + "] [" + level + "] " + message);
-    }
-
-    if (configuration.log_to_file && line != null) {
-        logToFile(line);
-    }
-
-    if (configuration.log_to_console && line != null) {
-        console.log(line);
-    }
-  },
-
-  set: function(key, value) {
-    configuration[key] = value;
+  } else {
+    level = "undefined";
   }
 
-};
+  var f = level_colors[level] || function(v) {
+    return v;
+  };
+  var line;
+
+  if (configuration.max_log_level >= level_map[level]) {
+    line = f("[" + getTimestamp() + "] [" + level + "] " + message);
+  }
+
+  if (configuration.log_to_file && line !== null) {
+    logToFile(line);
+  }
+
+  if (configuration.log_to_console && line !== null) {
+    console.log(line);
+  }
+}
+
+function set(key, value) {
+  configuration[key] = value;
+}
+
+function error(message, errorObject) {
+  if (typeof(errorObject) === "undefined") {
+    // do nothing
+  } else {
+    var f = level_colors["ERROR"] || function(v) {
+      return v;
+    };
+
+    if (configuration.max_log_level >= level_map["ERROR"]) {
+      line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
+      console.error(line, errorObject, errorObject.stack);
+    }
+  }
+}
+
+var logObject = {};
+logObject.log = log;
+logObject.error = error;
+logObject.set = set;
+
+module.exports = logObject;
