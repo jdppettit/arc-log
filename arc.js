@@ -3,7 +3,6 @@ var colors = require('colors');
 var path = require('path');
 var Promise = require('bluebird').Promise;
 var fs = Promise.promisifyAll(require('fs'));
-var mkdirp = Promise.promisify(require('mkdirp'));
 
 var configuration = {
   max_log_level: 4,
@@ -60,18 +59,18 @@ function log(message, level) {
 
   var f = level_colors[level] || function(v) {
     return v;
-  }
+  };
   var line;
 
   if (configuration.max_log_level >= level_map[level]) {
     line = f("[" + getTimestamp() + "] [" + level + "] " + message);
   }
 
-  if (configuration.log_to_file && line != null) {
+  if (configuration.log_to_file && line !== null) {
     logToFile(line);
   }
 
-  if (configuration.log_to_console && line != null) {
+  if (configuration.log_to_console && line !== null) {
     console.log(line);
   }
 }
@@ -86,7 +85,7 @@ function error(message, errorObject) {
   } else {
     var f = level_colors["ERROR"] || function(v) {
       return v;
-    }
+    };
 
     if (configuration.max_log_level >= level_map["ERROR"]) {
       line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
