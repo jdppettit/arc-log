@@ -48,7 +48,7 @@ function getTimestamp() {
 }
 
 function log(message, level) {
-  if (typeof(level) !== "undefined") {
+  if (typeof(level) !== "undefined" && typeof(level) === "string") {
     level = level.toUpperCase();
     if (level == "WARNING") {
       level = "WARN";
