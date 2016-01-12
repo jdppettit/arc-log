@@ -89,24 +89,25 @@ function error(message, errorObject) {
       return v;
     };
 
-      if (configuration.max_log_level >= level_map["ERROR"]) {
-        line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
-        console.error(line, errorObject, errorObject.stack);
-        if (errorHandler) {
-          errorHandler(errorObject);
-        }
+    if (configuration.max_log_level >= level_map["ERROR"]) {
+      line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
+      console.error(line, errorObject, errorObject.stack);
+      if (errorHandler) {
+        errorHandler(errorObject);
       }
     }
-  },
-
-  setErrorHandler: function(handler) {
-    errorHandler = handler;
   }
 }
+
+function setErrorHandler(handler) {
+  errorHandler = handler;
+}
+
 
 var logObject = {};
 logObject.log = log;
 logObject.error = error;
 logObject.set = set;
+logObject.setErrorHandler = setErrorHandler;
 
 module.exports = logObject;
