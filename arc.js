@@ -33,6 +33,8 @@ var level_map = {
   "SUCCESS": 6
 };
 
+var errorHandler;
+
 function logToFile(line) {
   if (configuration.hasOwnProperty("path")) {
       fs.appendFile(configuration.path, line + "\n", function(err) {
@@ -93,8 +95,15 @@ module.exports = {
       if (configuration.max_log_level >= level_map["ERROR"]) {
         line = f("[" + getTimestamp() + "] [" + "ERROR" + "] " + message);
         console.error(line, errorObject, errorObject.stack);
+        if (errorHandler) {
+          errorHandler(errorObject);
+        }
       }
     }
+  },
+
+  setErrorHandler: function(handler) {
+    errorHandler = handler;
   }
 
 };
