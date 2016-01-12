@@ -1,6 +1,6 @@
 {
   "name": "arc-log",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "A full featured logging solution for Node.js",
   "main": "arc.js",
   "scripts": {
@@ -25,7 +25,6 @@
     "bluebird": "^2.9.30",
     "colors": "^1.1.2",
     "fs": "0.0.2",
-    "mkdirp": "^0.5.1",
     "moment": "^2.10.3",
     "path": "^0.11.14"
   }
