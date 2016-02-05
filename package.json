@@ -1,6 +1,6 @@
 {
   "name": "arc-log",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A full featured logging solution for Node.js",
   "main": "arc.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/silverp1/arc-log#readme",
   "dependencies": {
-    "bluebird": "^2.9.30",
+    "bluebird": "^3.2.1",
     "colors": "^1.1.2",
     "fs": "0.0.2",
     "moment": "^2.10.3",
