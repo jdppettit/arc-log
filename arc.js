@@ -58,6 +58,12 @@ function log(message, level) {
   } else {
     level = "undefined";
   }
+  
+  if(typeof(message) === "object") {
+    try {
+      message = JSON.stringify(message);
+    } catch (err) {}
+  }
 
   var f = level_colors[level] || function(v) {
     return v;

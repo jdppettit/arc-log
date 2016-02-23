@@ -7,8 +7,10 @@ log("bar", "FATAL");
 log("baz", "WARN");
 
 function foo() {
-	console.log("foo");
+	console.log("I ran!");
 }
 arc.setErrorHandler(foo);
+
+log({'anObject':'can you see me?'}, "warn");
 
 log.error("oh noes it errored!", new Error("Im ded"));
