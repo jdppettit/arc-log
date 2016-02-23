@@ -2,7 +2,7 @@ var moment = require('moment');
 var colors = require('colors');
 var path = require('path');
 var Promise = require('bluebird').Promise;
-var fs = Promise.promisifyAll(require('fs'));
+var fs = require('fs');
 
 var configuration = {
   max_log_level: 4,
